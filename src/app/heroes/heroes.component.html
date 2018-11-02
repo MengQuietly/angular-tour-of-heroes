@@ -1,0 +1,72 @@
+
+<!--
+  1、[ngModel]单向绑定；[(ngModel)] 双向绑定；
+  2、uppercase 大写展示；
+
+  3、*ngIf:
+      // TS code:
+        show: boolean = true;
+         thenBlock: TemplateRef<any>|null = null;
+        @ViewChild('primaryBlock')
+          primaryBlock: TemplateRef<any>|null = null;
+        @ViewChild('secondaryBlock')
+          secondaryBlock: TemplateRef<any>|null = null;
+
+          ngOnInit() {
+             this.thenBlock = this.primaryBlock;
+          }
+          switchPrimary() {
+            this.thenBlock = this.thenBlock === this.primaryBlock ? this.secondaryBlock : this.primaryBlock;
+          }
+      // HTML code
+      <button (click)="show = !show">
+        {{show ? 'hide' : 'show'}}
+      </button>
+      <button (click)="switchPrimary()">
+        Switch Primary
+      </button>
+    1)常用方法
+      <div *ngIf="show">Text to show</div>
+    2)else方法（else绑定指向<ng-template>标记的#elseBlock）
+      <div *ngIf="show; else elseBlock">Text to show</div>
+      <ng-template #elseBlock>elseBlock</ng-template>
+    3)else--then方法
+      <div *ngIf="show;then thenBlock;else elseBlock;">Text to show</div>
+      <ng-template #primaryBlock>primaryBlock</ng-template>
+      <ng-template #secondaryBlock>secondaryBlock </ng-template>
+      <ng-template #elseBlock>elseBlock</ng-template>
+ 4、*ngFor 用法
+      <li *ngFor="let item of heroes | async as heroesData; index as i; first as isFirst;">
+        {{i}}/{{heroes.length}}.{{heroes}}
+        <span *ngIf="isFirst">default</span>
+      </li>
+
+-->
+
+<ul class="heroes">
+  <li *ngFor="let hero of heroes">
+    <a routerLink="/detail/{{hero.id}}">
+      <span class="badge">{{hero.id}}</span>
+      <label>{{hero.name}}</label>
+    </a>
+  </li>
+</ul>
+<!-- 注：和上面效果一样，上面被抽出去了。 -->
+<!--<ul class="heroes">-->
+<!--<li *ngFor="let hero of heroes"-->
+<!--[class.selected]="hero === selectedHero"-->
+<!--(click)="onSelect(hero)">-->
+<!--<span class="badge">{{hero.id}}</span>-->
+<!--<label>{{hero.name}}</label>-->
+<!--</li>-->
+<!--</ul>-->
+<!--<app-hero-detail [hero]="selectedHero"></app-hero-detail>-->
+
+<!-- 注：和上面<app-hero-detail>效果一样，上面被抽出去了。 -->
+<div *ngIf="selectedHero">
+  <p>{{selectedHero.name | uppercase}} 的 Details</p>
+  <div><span>id:{{selectedHero.id}}</span></div>
+  <div>name:<input [(ngModel)]="selectedHero.name" placeholder="name"></div>
+</div>
+
+

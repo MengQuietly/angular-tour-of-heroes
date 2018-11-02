@@ -1,0 +1,7 @@
+<div *ngIf="hero">
+  <p>{{hero.name | uppercase}} 的 Detail</p>
+  <div><span>id:</span>{{hero.id}}</div>
+  <div>name:<input [(ngModel)]="hero.name" placeholder="name"></div>
+
+  <button (click)="goBack()">go back</button>
+</div>
